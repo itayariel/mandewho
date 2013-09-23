@@ -72,6 +72,7 @@ public class RideActivity extends Activity {
 		}
 		hideOrShowFewButton();
 		
+		new SingleRideHolder(this,_ride);
 		_screen.setVisibility(View.VISIBLE);
 		ImageView pageIcon = (ImageView) findViewById(R.id.page_icon);
 		TextView pageKindView = (TextView) findViewById(R.id.page_kind);

@@ -29,7 +29,8 @@ public class RideListAdapter extends ArrayAdapter<ParseObject> {
 		LayoutInflater inflater = (LayoutInflater) context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rideView = inflater.inflate(R.layout.live_list_line, parent,false);
-
+		final ParseObject ride = ridesList.get(position);
+		new SingleRideHolder((MainActivity)context,rideView,ride);
 		return rideView;	
 	}
 
