@@ -2,13 +2,12 @@ package com.itay.mandewho;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.parse.ParseObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,6 +51,7 @@ public class SingleRideHolder
 		putData(ride);
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	private void putData(ParseObject ride)
 	{
 		

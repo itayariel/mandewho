@@ -1,9 +1,5 @@
 package com.itay.mandewho;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.parse.*;
@@ -13,10 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class RideListAdapter extends ArrayAdapter<ParseObject> {
 
@@ -37,8 +29,6 @@ public class RideListAdapter extends ArrayAdapter<ParseObject> {
 		LayoutInflater inflater = (LayoutInflater) context
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rideView = inflater.inflate(R.layout.live_list_line, parent,false);
-		final ParseObject ride = ridesList.get(position);
-		SingleRideHolder singleRideHolder = new SingleRideHolder((MainActivity)context,rideView,ride);
 
 		return rideView;	
 	}

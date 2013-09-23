@@ -1,10 +1,6 @@
 package com.itay.mandewho;
 
-
-import com.parse.ParseObject;
-
 public class Ride {
-	
 	public static final String RIDE="Ride";
 	public static final String DATE="date";
 	public static final String FROM="from";
@@ -22,7 +18,5 @@ public class Ride {
 	public static final String GROUPS="groups";
 	
 	public Ride() {
-		
 	}
-
 }

@@ -1,16 +1,10 @@
 package com.itay.mandewho;
 
-import java.util.ArrayList;
-import java.util.Currency;
-
 import com.facebook.Session;
 import com.parse.*;
 
 import android.os.Bundle;
 
-import android.app.Activity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -26,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
 
 public class MainActivity extends FragmentActivity {
 	static final int ITEMS = 3;
@@ -205,9 +198,9 @@ public class MainActivity extends FragmentActivity {
 		return true;
 	}
 	
-	private String getFragmentTag(int pos){
-	    return "android:switcher:"+R.id.pager+":"+pos;
-	}
+//	private String getFragmentTag(int pos){
+//	    return "android:switcher:"+R.id.pager+":"+pos;
+//	}
 	
 	
 	public void setSettingFragment(SettingsFragment frag)
