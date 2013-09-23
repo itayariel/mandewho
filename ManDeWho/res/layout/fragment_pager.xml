@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@drawable/activity_background_style">
+
+    <HorizontalScrollView
+        android:id="@+id/tabscroller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent" 
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/mygallery"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/NewRide"
+                android:layout_width="126dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/tab_design"
+                android:text="@string/newRide" />
+
+            <Button
+                android:id="@+id/Live"
+                android:layout_width="149dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/chosen_tab_design"
+                android:text="@string/live" />
+
+            <Button
+                android:id="@+id/MySettings"
+                android:layout_width="149dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/tab_design"
+                android:text="@string/settings" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" 
+        android:padding="10dip">
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

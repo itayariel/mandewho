@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Your Email</string>
+    <string name="prompt_email2">Your Email again</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_new_password">New password</string>
+    <string name="action_sign_in_register"><b>Sign in</b> or register</string>
+    <string name="action_register"><b>Register</b></string>
+    <string name="action_register_under"><u>Register</u></string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_short_under"><u>Sign in</u></string>
+    <string name="action_log_in_short">Log in</string>
+    <string name="action_log_in_short_under"><u>Log in</u></string>
+    <string name="action_forgot_password">Recover lost password</string>
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_email_not_same">Emails are not the same</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="please_verify">Please verify your email and than jump in</string>
+    <string name="jump_in">Jump in</string>
+	<string name="IMUser">already a user?</string>
+	<string name="IMNew">New user?</string>
+	<string name="notFace">Don\'t have Facebook?</string>
+	<string name="Iforgot">I forgot my password</string>
+</resources>

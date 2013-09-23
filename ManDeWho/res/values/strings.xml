@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ManDeWho</string>
+    <string name="get_started">To get started, log in using Facebook</string>
+    <string name="no_rides">Nothing to show..</string>
+    <string name="loading">Loading..</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="myGroups">My Groups</string>
+    <string name="settings">Settings</string>
+    <string name="live">Live</string>
+    <string name="newRide">New Ride</string>
+    <string name="where">Where</string>
+    <string name="when">When</string>
+    <string name="publishToGroups">Groups to publish</string>
+    <string name="personalDetails">Personal Details</string>
+    <string name="groups">Groups</string>
+    <string name="showRides">Show rides</string>
+    <string name="showRiders">Show riders</string>
+    <string name="comments">Comments</string>
+    <string name="myDetails">My Details</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="sms">Sms</string>
+    <string name="myProfile">My Profile</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="at">At</string>
+    <string name="publish">Publish</string>
+    <string name="welcome">Welcome!</string>
+    <string name="firstNameHint">First Name</string>
+    <string name="lastNameHint">Last Name</string>
+    <string name="addingRide">Adding Ride  &#8230;</string>
+    <string name="Ineed">I need a ride</string>
+    <string name="Istart">I\'m starting a ride</string>
+    <string name="title_activity_face">FaceActivity</string>
+    <string name="ride">Ride</string>
+    <string name="rider">Rider</string>
+    <string name="app_id">537020433036560</string>
+    <string name="IwantText">I want to join your ride</string>
+    <string name="IcanText">I can take you with me</string>
+
+</resources>
