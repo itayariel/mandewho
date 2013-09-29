@@ -55,7 +55,7 @@ public class SettingsGroupsViewAdapter extends ArrayAdapter<Group> {
 			return lineView;
 		}
 	
-		final Group group = _groups.get(position-1);
+		final Group group = _groups.get(position);
 		lineView = inflater.inflate(R.layout.group_view_in_groups_list, parent,false);
 		SingleGroupHolder singleGroupHolder = new SingleGroupHolder();
 		singleGroupHolder.nameHolder = (TextView) lineView.findViewById(R.id.settingsGroupName);
@@ -75,10 +75,6 @@ public class SettingsGroupsViewAdapter extends ArrayAdapter<Group> {
 				else
 				{
 					activeGroups.remove(group.getId());
-				}
-				if(((MainActivity)context)!=null && ((MainActivity)context).myLiveFragment!=null)
-				{
-					((MainActivity)context).myLiveFragment.updateGui();
 				}
 				if(((MainActivity)context)!=null && ((MainActivity)context).myAddFragment!=null)
 				{

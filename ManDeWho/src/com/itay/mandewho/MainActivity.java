@@ -1,5 +1,13 @@
 package com.itay.mandewho;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.facebook.HttpMethod;
+import com.facebook.Request;
+import com.facebook.RequestAsyncTask;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.parse.*;
 
@@ -30,9 +38,8 @@ public class MainActivity extends FragmentActivity {
 	ViewPager mPager;
 	Button liveButton, addButton,settingsButton;
 	public ParseUser currentUser;
-	public SettingsFragment mySettingFragment=null;
-	public LiveFragment myLiveFragment=null;
 	public AddFragment myAddFragment=null;
+	public SettingsFragment mySettingsFragment=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,41 +57,90 @@ public class MainActivity extends FragmentActivity {
 		}
 		getUserDetails();
 		mPager.setPageMargin(20);
-		
 		swipeListen();
 	}
 
+	/*
+	 * Updates the user from the cloud and from facebook
+	 */
 	private void getUserDetails() {
-		System.out.println("fetching");
-		currentUser.fetchInBackground(new GetCallback<ParseUser>() {
-			  public void done(ParseUser newUser, ParseException e) {
-			    if (e == null) {
-			    	currentUser=newUser;
-			    	System.out.println("fetch success");
-			    } else {
-			    	System.out.println("fetch failed");
-			    	System.out.println(e.toString());
-			    }
-			  }
-			});
-		
+		currentUser.fetchInBackground(new GetCallback<ParseObject>() {
+			public void done(ParseObject object, ParseException e) {
+				if (e == null) {
+					System.out.println("fetch success");
+					getFacebookGroupsInBackground();
+				} else {
+				}
+			}
+		});
+
 	}
 	
-	public void onResume()
-	{
-		super.onResume();
-		if(myLiveFragment!=null)
-		{
-			myLiveFragment.updateGui();
+	/*
+	 * Sends request to facebook graph for updated user details
+	 */
+	private void getFacebookGroupsInBackground() {
+		Request.Callback C = new Request.Callback() {
+			public void onCompleted(Response response) {
+				if (response != null) {
+					try {
+						System.out.println("fetch facebook success");
+						saveFaceBookData(response.getGraphObject().getInnerJSONObject());
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+		};
+		Bundle params = new Bundle();
+		params.putString("fields", "id,name,groups,email,picture");
+		Request request = new Request(ParseFacebookUtils.getSession(),
+				"me", params, HttpMethod.GET, C);
+
+		RequestAsyncTask task = new RequestAsyncTask(request);
+		task.execute();
+	}
+
+	/*
+	 * Saves the user facebook details inside parse
+	 */
+	protected void saveFaceBookData(JSONObject user) {
+		try {
+			currentUser.put(UserFields.FACEBOOKID, user.get("id"));
+			currentUser.put(UserFields.FULLNAME, user.get("name"));
+			currentUser.put(UserFields.EMAIL, user.get("email"));
+			JSONObject pictureObject = new JSONObject(user.get("picture").toString());
+			JSONObject pictureInnerObject = pictureObject.getJSONObject("data");
+			if(pictureInnerObject.isNull("url"))
+			{
+				currentUser.put(UserFields.PICTURE, null);
+			}
+			else
+			{
+				currentUser.put(UserFields.PICTURE, pictureInnerObject.get("url"));
+			}
+			JSONObject facebookGroups = new JSONObject(user.get("groups").toString());
+			currentUser.put(UserFields.GROUPS, facebookGroups.get("data"));
+		} catch (JSONException e1) {
+			e1.printStackTrace();
 		}
+		updateAll();
+		System.out.println("updateing gui");
+		currentUser.saveInBackground();
 	}
-	
+
+	/*
+	 * Moves the user to the login activity if he choose to logout
+	 */
 	public void moveToLogin() {
 		final Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 		finish();	
 	}
 
+	/*
+	 * initiates the fragments pages
+	 */
 	private void initPages()
 	{
 		mAdapter = new MyAdapter(getSupportFragmentManager());
@@ -120,6 +176,9 @@ public class MainActivity extends FragmentActivity {
 		});
 	}
 
+	/*
+	 * Swipes user to the chosen tab from the bar on top
+	 */
 	private void swipeToTab(int tab)
 	{
 		HorizontalScrollView sv = (HorizontalScrollView)findViewById(R.id.tabscroller);
@@ -139,6 +198,9 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+	/*
+	 * Listens to user swipes
+	 */
 	private void swipeListen(){
 		mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
@@ -155,6 +217,9 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
+	/*
+	 * changes the background of the tabs buttons
+	 */
 	public void changeBackground(Button pressed)
 	{
 		addButton.setBackgroundResource(R.drawable.tab_design);
@@ -163,6 +228,9 @@ public class MainActivity extends FragmentActivity {
 		pressed.setBackgroundResource(R.drawable.chosen_tab_design);
 	}
 
+	/*
+	 * Page Adapter for the activity fragments
+	 */
 	public static class MyAdapter extends FragmentPagerAdapter {
 		public MyAdapter(FragmentManager fragmentManager) {
 			super(fragmentManager);
@@ -175,12 +243,12 @@ public class MainActivity extends FragmentActivity {
 		@Override 
 		public void destroyItem(ViewGroup container, int position, Object object) {
 		} 
-		
+
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
 			case ADD: // Fragment # 0 - add ride frag
-				return AddFragment.init(position);
+			return AddFragment.init(position);
 			case LIVE: // Fragment # 1 - live rides frag
 				return LiveFragment.init(position);
 			case SETTINGS: // Fragment # 2 - settings frag
@@ -197,22 +265,26 @@ public class MainActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
-//	private String getFragmentTag(int pos){
-//	    return "android:switcher:"+R.id.pager+":"+pos;
-//	}
-	
-	
+
+	/*
+	 * Called by fragment for keeping connection to current fragment
+	 */
 	public void setSettingFragment(SettingsFragment frag)
 	{
-		mySettingFragment=frag;
+		mySettingsFragment=frag;
 	}
 	
-	public void setLiveFragment(LiveFragment frag)
+	/*
+	 * Called by fragment for keeping connection to current fragment
+	 */
+	public void setAddFragment(AddFragment frag)
 	{
-		myLiveFragment=frag;
+		myAddFragment=frag;
 	}
 
+	/*
+	 * Deletes all user data before login out
+	 */
 	public void logOut() {
 		System.out.println("you want to log out");
 		ParseUser.logOut();
@@ -225,4 +297,18 @@ public class MainActivity extends FragmentActivity {
 		moveToLogin();
 	}
 
+	/*
+	 * Update fragments after fetching new data
+	 */
+	private void updateAll()
+	{
+		if(myAddFragment!=null)
+		{
+			myAddFragment.updateGui();
+		}
+		if(mySettingsFragment!=null)
+		{
+			mySettingsFragment.updateGui();
+		}
+	}
 }

@@ -113,10 +113,6 @@ public class LoginActivity extends Activity {
 					
 					getFacebookIdInBackground();
 				}
-				else
-				{
-					
-				}
 			}
 		});
 	}
@@ -171,11 +167,9 @@ public class LoginActivity extends Activity {
 			ActiveGroups list = new ActiveGroups(null,(JSONArray)facebookGroups.get("data"));
 			currentUser.addAllUnique(UserFields.ACTIVEGROUPS, list.getActiveGroupsList());
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
-//		currentUser.put("groups", user.asMap().get("groups"));
+
 		currentUser.saveInBackground(new SaveCallback() {
 			public void done(ParseException e) {
 				if (e == null) {

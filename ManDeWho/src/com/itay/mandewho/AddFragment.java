@@ -47,7 +47,6 @@ public class AddFragment extends Fragment{
 	ParseUser _currentUser;
 	View _fragView;
 	MainActivity _myActivity;
-	AddFragGroupsAdapter _groupsAdapter;
 	static Calendar _date;
 	static ParseObject _rideObject;
 	static ArrayList<Group> _groupsList;
@@ -62,7 +61,6 @@ public class AddFragment extends Fragment{
 		Bundle args = new Bundle();
 		args.putInt("val", val);
 		myFrag.setArguments(args);
-
 		return myFrag;
 	}
 
@@ -72,7 +70,7 @@ public class AddFragment extends Fragment{
 		_myActivity = (MainActivity)getActivity();
 		_currentUser  = _myActivity.currentUser;
 		fragVal = getArguments() != null ? getArguments().getInt("val") : 1;
-
+		_myActivity.setAddFragment(this);
 	}
 
 	@Override
@@ -86,6 +84,9 @@ public class AddFragment extends Fragment{
 		return layoutView;
 	}
 
+	/*
+	 * Updates the screen, refresh all data in form
+	 */
 	public void updateGui() {
 		buttonsListener listener = new buttonsListener();
 		final View publishButton = _fragView.findViewById(R.id.publishButton);
@@ -102,7 +103,7 @@ public class AddFragment extends Fragment{
 		dateButton.setText(currentDateString);
 		String currentTimeString = new SimpleDateFormat("HH:mm").format(new Date());
 		timeButton.setText(currentTimeString);
-		diplayGroupsList();
+		generateGroupsList();
 		_rideObject = new ParseObject(Ride.RIDE);
 		_date = Calendar.getInstance();
 		EditText fromHolder = (EditText) _fragView.findViewById(R.id.fromField);
@@ -129,7 +130,10 @@ public class AddFragment extends Fragment{
 
 	}
 
-	private void diplayGroupsList()
+	/*
+	 * Generates the list of groups that should appear
+	 */
+	private void generateGroupsList()
 	{
 		if(_fragView==null || _currentUser==null)
 		{
@@ -156,11 +160,6 @@ public class AddFragment extends Fragment{
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		//		_groupsAdapter = new AddFragGroupsAdapter(getActivity(), R.layout.group_view, _groupsList);
-		//		ListView listview = (ListView) _fragView.findViewById(R.id.GroupsListView);
-		//		listview.setAdapter(_groupsAdapter);
-
 	}
 
 
@@ -173,6 +172,9 @@ public class AddFragment extends Fragment{
 	}
 
 
+	/*
+	 * Listens to the screen buttons
+	 */
 	private class buttonsListener implements View.OnClickListener 
 	{
 		public void onClick(View v) {
@@ -281,10 +283,6 @@ public class AddFragment extends Fragment{
 					Toast toast = Toast.makeText(context, text, duration);
 					toast.show();
 					updateGui();
-					if(_myActivity!=null && _myActivity.myLiveFragment!=null)
-					{
-						_myActivity.myLiveFragment.updateGui();
-					}
 				} else {
 					text = "Ride adding failed";
 					Toast toast = Toast.makeText(context, text, duration);
@@ -295,15 +293,6 @@ public class AddFragment extends Fragment{
 
 	}
 
-
-
-	public void showStatus(boolean show)
-	{
-		View mAddStatusView = _fragView.findViewById(R.id.add_status);
-		View mAddFormView = _fragView.findViewById(R.id.addForm);	
-		mAddStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
-		mAddFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-	}
 
 	/*
 	 * A time picker class

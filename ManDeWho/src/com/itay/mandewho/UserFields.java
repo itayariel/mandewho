@@ -8,5 +8,6 @@ public class UserFields {
 	public static final String EMAIL="username";
 	public static final String GROUPS="Groups";
 	public static final String ACTIVEGROUPS="ActiveGroups";
+	public static final String NONACTIVEGROUPS="NonActiveGroups";
 	public static final String PHONENUMBER="PhoneNumber";
 }

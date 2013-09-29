@@ -53,7 +53,6 @@ public class LiveFragment extends ListFragment  {
 		fragVal = getArguments() != null ? getArguments().getInt("val") : 1;
 		_myActivity = (MainActivity)getActivity();
 		_currentUser = ParseUser.getCurrentUser();
-		_myActivity.setLiveFragment(this);
 		_firstLoad=true;
 		listKind=ListKind.CARS;
 	}

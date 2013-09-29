@@ -55,6 +55,9 @@ public class SettingsFragment extends ListFragment {
 		return layoutView;
 	}
 	
+	/*
+	 * Updates the gui of this fragment
+	 */
 	public void updateGui()
 	{
 		createGroupsArray();
@@ -66,16 +69,20 @@ public class SettingsFragment extends ListFragment {
 	//Generates a list of groups for the list view 
 	private void createGroupsArray() {
 		_groups  = new ArrayList<Group>();
+		_groups.add(new Group("headline"));
 		List<String> activeGroups = _currentUser.getList(UserFields.ACTIVEGROUPS);
 		JSONArray groupsList = _currentUser.getJSONArray(UserFields.GROUPS);
 		if(groupsList!=null && groupsList.length()!=0)
 		{
 			try {
+				System.out.println("building settings");
 				for (int i = 0; i < groupsList.length(); i++) {
 					Group group = new Group(groupsList.getJSONObject(i));
 					if(activeGroups.contains(group.getId()))
 					{
 						group.setChecked(true);
+						System.out.println("group number "+i);
+						System.out.println(group.getName());
 					}
 					else
 					{

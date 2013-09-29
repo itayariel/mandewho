@@ -200,14 +200,14 @@
 
             <Button
                 android:id="@+id/groupsButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="6dip"
-                android:background="#E0E0E0"
+                android:layout_marginTop="6dip"
+                android:layout_marginBottom="6dip"
                 android:paddingBottom="10dip"
-                android:paddingLeft="30dip"
-                android:paddingRight="30dip"
+                android:layout_marginLeft="30dip"
+                android:layout_marginRight="30dip"
                 android:paddingTop="10dip"
                 android:text="@string/groups" />
 

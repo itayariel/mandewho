@@ -20,13 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:paddingTop="140dip"
             android:fontFamily="sans-serif-light"
+            android:paddingTop="140dip"
             android:text="@string/login_progress_signing_in"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
-  
     <!-- Facebook welcome -->
 
     <LinearLayout
@@ -41,8 +41,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_marginTop="30dip"
+            android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <Button
@@ -52,8 +52,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:background="@drawable/logo_small" />
+                android:background="@drawable/logo_small"
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,6 +76,7 @@
             android:gravity="center_horizontal"
             android:lines="2"
             android:text="@string/get_started"
+            android:textColor="#ffffff"
             android:textSize="17sp" />
 
         <com.facebook.widget.LoginButton
@@ -85,7 +86,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="30dp" />
-
     </LinearLayout>
 
 </LinearLayout>
