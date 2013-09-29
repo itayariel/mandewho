@@ -84,15 +84,17 @@ public class LiveFragment extends ListFragment  {
 		_emptyList.setText(_myActivity.getResources().getString(R.string.loading));
 		_currentUser = ParseUser.getCurrentUser();
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Ride");
+		ParseQuery.clearAllCachedResults();
+		System.out.println(_currentUser.getList(UserFields.ACTIVEGROUPS).toString());
 		query.whereContainedIn(Ride.GROUPS,_currentUser.getList(UserFields.ACTIVEGROUPS));
 		query.findInBackground(new FindCallback<ParseObject>() {
 			public void done(List<ParseObject> objects, ParseException e) {
 				_emptyList.setText(_myActivity.getResources().getString(R.string.no_rides));
 				if (e == null) {
 					ParseObject ride;
+					_cars = new ArrayList<ParseObject>();
+					_riders = new ArrayList<ParseObject>();
 					if(objects!=null && !objects.isEmpty()){
-						_cars = new ArrayList<ParseObject>();
-						_riders = new ArrayList<ParseObject>();
 						for (int i = 0; i < objects.size(); i++) {
 							ride = objects.get(i);
 							Calendar rideTime = new GregorianCalendar ();

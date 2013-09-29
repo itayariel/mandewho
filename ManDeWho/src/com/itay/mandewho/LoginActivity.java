@@ -60,16 +60,6 @@ public class LoginActivity extends Activity {
 		buttonsListener listener = new buttonsListener();
 		findViewById(R.id.login_button).setOnClickListener(listener);
 		/*
-		 * Kill user saved login*/
-		ParseUser.logOut();
-		Session session = Session.getActiveSession();
-		if(session !=null)
-		{
-			session.closeAndClearTokenInformation();
-		}
-		currentUser = ParseUser.getCurrentUser();
-		//*/
-		/*
 		 * Check if user is logged in 
 		 */
 		if (currentUser == null) {			// Set up the register form.

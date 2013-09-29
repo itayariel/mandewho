@@ -312,7 +312,7 @@ public class AddFragment extends Fragment{
 
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			Button timeButton = (Button) getActivity().findViewById(R.id.timeButton);
-			_date.set(Calendar.HOUR, hourOfDay);
+			_date.set(Calendar.HOUR_OF_DAY, hourOfDay);
 			_date.set(Calendar.MINUTE, minute);
 			String chosenTimeString = new SimpleDateFormat("HH:mm").format(_date.getTime());
 			timeButton.setText(chosenTimeString);

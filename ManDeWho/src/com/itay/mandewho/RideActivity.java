@@ -99,9 +99,15 @@ public class RideActivity extends Activity {
 		{
 			((View)findViewById(R.id.delete_layer)).setVisibility(View.VISIBLE);
 		}
+		System.out.println(_ride.get(Ride.COMMENTS));
+		System.out.println("this is comments");
 		if(_ride.get(Ride.COMMENTS)==null || _ride.get(Ride.COMMENTS).equals(""))
 		{
 			((TextView)findViewById(R.id.rideDetails)).setVisibility(View.GONE);
+		}
+		else
+		{
+			((TextView)findViewById(R.id.rideDetails)).setText(_ride.get(Ride.COMMENTS).toString());
 		}
 		if(_ride.get(Ride.BYMAIL)==null || _ride.get(Ride.BYMAIL).equals(""))
 		{

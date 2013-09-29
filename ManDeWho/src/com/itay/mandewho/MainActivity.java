@@ -47,14 +47,11 @@ public class MainActivity extends FragmentActivity {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		Parse.initialize(this, "4PgddgAXZjvMhpVJeILJ54dNH21NaRTpR4kTCVqQ", "1ur95H52EAwP6UVPNEHoHWEUYXGVmu5K1QwqZpyB");
 		setContentView(R.layout.fragment_pager);
-		initPages();
 		currentUser = ParseUser.getCurrentUser();
-		if (currentUser != null) {
-
-		} else {
-			//User is not logged in
+		if (currentUser == null) {//User is not logged in
 			moveToLogin();
-		}
+		} 
+		initPages();
 		getUserDetails();
 		mPager.setPageMargin(20);
 		swipeListen();

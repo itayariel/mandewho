@@ -85,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:textColor="#ffffff"
                     android:layout_marginTop="4dip"
                     android:text=""
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -94,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:textColor="#ffffff"
                     android:layout_marginLeft="4dip"
                     android:text=""
                     android:textAppearance="?android:attr/textAppearanceSmall" />
