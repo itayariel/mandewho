@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dip"
         android:background="@layout/rounded_view"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:padding="4dip" >
 
@@ -78,9 +80,9 @@
             android:text="@string/facebook_error"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#D00000"
-            android:textSize="17sp" 
-            android:visibility="gone"/>
-        
+            android:textSize="17sp"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="174dp"

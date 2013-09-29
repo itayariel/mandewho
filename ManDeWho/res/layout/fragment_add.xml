@@ -75,17 +75,17 @@
                 <requestFocus />
 
                 <RadioButton
-                    android:id="@+id/radioIneed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/Ineed" />
-
-                <RadioButton
                     android:id="@+id/radioIstart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/Istart" />
+
+                <RadioButton
+                    android:id="@+id/radioIneed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Ineed" />
             </RadioGroup>
 
             <TextView
@@ -95,8 +95,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
                 android:text="@string/where"
-                android:textColor="#ffffff"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff" />
 
             <View
                 android:layout_width="fill_parent"
@@ -161,9 +161,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
-                android:textColor="#ffffff"
                 android:text="@string/when"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff" />
 
             <View
                 android:layout_width="fill_parent"
@@ -203,11 +203,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="6dip"
                 android:layout_marginBottom="6dip"
-                android:paddingBottom="10dip"
                 android:layout_marginLeft="30dip"
                 android:layout_marginRight="30dip"
+                android:layout_marginTop="6dip"
+                android:paddingBottom="10dip"
                 android:paddingTop="10dip"
                 android:text="@string/groups" />
 
@@ -217,9 +217,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
-                android:textColor="#ffffff"
                 android:text="@string/comments"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff" />
 
             <View
                 android:layout_width="fill_parent"
@@ -258,8 +258,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
                 android:text="@string/myDetails"
-                android:textColor="#ffffff"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff" />
 
             <View
                 android:layout_width="fill_parent"
