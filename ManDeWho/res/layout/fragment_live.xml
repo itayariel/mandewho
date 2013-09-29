@@ -74,8 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_margin="30dp"
+		android:textColor="#ffffff"
         android:paddingTop="30dp"
         android:background="@android:color/transparent"
         android:text="@string/no_rides" />

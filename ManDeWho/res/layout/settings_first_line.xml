@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/personalDetails"
+        android:textColor="#ffffff"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View
@@ -39,6 +40,7 @@
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:layout_marginLeft="5dip"
                 android:text="" />
         </LinearLayout>
@@ -59,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
         android:text="@string/groups"
+        android:textColor="#ffffff"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>

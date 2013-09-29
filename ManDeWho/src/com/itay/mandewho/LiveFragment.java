@@ -1,6 +1,11 @@
 package com.itay.mandewho;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.parse.*;
@@ -27,7 +32,7 @@ public class LiveFragment extends ListFragment  {
 	List<ParseObject> _cars;
 	List<ParseObject> _riders;
 	TextView _emptyList;
-	
+
 	private enum ListKind {
 		MANS, CARS
 	};
@@ -91,14 +96,36 @@ public class LiveFragment extends ListFragment  {
 						_riders = new ArrayList<ParseObject>();
 						for (int i = 0; i < objects.size(); i++) {
 							ride = objects.get(i);
-							if(ride.getBoolean(Ride.RIDEKIND)==Ride.CAR)
+							Calendar rideTime = new GregorianCalendar ();
+							rideTime.setTime(ride.getDate(Ride.DATE));
+							Calendar now = Calendar.getInstance();
+							if(rideTime.after(now))
 							{
-								_cars.add(ride);
+								if(ride.getBoolean(Ride.RIDEKIND)==Ride.CAR)
+								{
+									_cars.add(ride);
+								}
+								else
+								{
+									_riders.add(ride);
+								}
 							}
 							else
 							{
-								_riders.add(ride);
-							}				
+								System.out.println("throen here "+ride.getString(Ride.FROM));
+								System.out.println(now.get(Calendar.DAY_OF_MONTH));
+								System.out.println(rideTime.get(Calendar.DAY_OF_MONTH));
+							}
+							Collections.sort(_cars,new Comparator<ParseObject>(){
+								public int compare(ParseObject lhs,
+										ParseObject rhs) {
+									return lhs.getDate(Ride.DATE).compareTo(rhs.getDate(Ride.DATE));
+								}});
+							Collections.sort(_riders,new Comparator<ParseObject>(){
+								public int compare(ParseObject lhs,
+										ParseObject rhs) {
+									return lhs.getDate(Ride.DATE).compareTo(rhs.getDate(Ride.DATE));
+								}});
 						}
 					}
 					updateButtons();
@@ -207,5 +234,5 @@ public class LiveFragment extends ListFragment  {
 				_myActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			}});
 	}
-
 }
+

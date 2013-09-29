@@ -95,6 +95,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
                 android:text="@string/where"
+                android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <View
@@ -124,7 +125,8 @@
                     android:layout_width="181dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="text" >
+                    android:inputType="text"
+                    android:textColor="#2C3539" >
                 </EditText>
             </LinearLayout>
 
@@ -148,7 +150,8 @@
                     android:layout_width="181dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="text" >
+                    android:inputType="text"
+                    android:textColor="#2C3539" >
                 </EditText>
             </LinearLayout>
 
@@ -158,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
+                android:textColor="#ffffff"
                 android:text="@string/when"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -194,31 +198,18 @@
                     android:textSize="25sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView22"
+            <Button
+                android:id="@+id/groupsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_weight="0.07"
-                android:text="@string/publishToGroups"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="2dp"
-                android:background="@android:color/darker_gray"
-                android:paddingTop="5dip" />
-
-            <ListView
-                android:id="@+id/GroupsListView"
-                android:layout_width="match_parent"
-                android:layout_height="185dp"
-                android:padding="6dip"
-                android:paddingLeft="14dip"
-                android:paddingRight="14dip" >
-            </ListView>
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="6dip"
+                android:background="#E0E0E0"
+                android:paddingBottom="10dip"
+                android:paddingLeft="30dip"
+                android:paddingRight="30dip"
+                android:paddingTop="10dip"
+                android:text="@string/groups" />
 
             <TextView
                 android:id="@+id/textView29"
@@ -226,6 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
+                android:textColor="#ffffff"
                 android:text="@string/comments"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -247,8 +239,8 @@
                 android:layout_weight="6.76"
                 android:background="@layout/rounded_comments"
                 android:ems="10"
-                android:lines="3"
                 android:inputType="textMultiLine"
+                android:lines="3"
                 android:minLines="2"
                 android:padding="6dip"
                 android:paddingLeft="10dip"
@@ -266,6 +258,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_weight="0.07"
                 android:text="@string/myDetails"
+                android:textColor="#ffffff"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <View

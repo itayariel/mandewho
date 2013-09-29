@@ -80,6 +80,10 @@ public class SettingsGroupsViewAdapter extends ArrayAdapter<Group> {
 				{
 					((MainActivity)context).myLiveFragment.updateGui();
 				}
+				if(((MainActivity)context)!=null && ((MainActivity)context).myAddFragment!=null)
+				{
+					((MainActivity)context).myAddFragment.updateGui();
+				}
 				_currentUser.put(UserFields.ACTIVEGROUPS, activeGroups);
 				_currentUser.saveInBackground();
 			}

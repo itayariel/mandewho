@@ -16,6 +16,11 @@
     <string name="publishToGroups">Groups to publish</string>
     <string name="personalDetails">Personal Details</string>
     <string name="groups">Groups</string>
+    <string name="youMustChooseFrom">Missing from!</string>
+    <string name="youMustChooseTo">Missing to!</string>
+    <string name="groupsToSend">Pick Groups</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="showRides">Show rides</string>
     <string name="showRiders">Show riders</string>
     <string name="comments">Comments</string>

@@ -18,11 +18,15 @@ import com.parse.SaveCallback;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.MatrixCursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.app.DatePickerDialog;
 import android.view.LayoutInflater;
@@ -44,9 +48,9 @@ public class AddFragment extends Fragment{
 	View _fragView;
 	MainActivity _myActivity;
 	AddFragGroupsAdapter _groupsAdapter;
-	ArrayList<Group> _groupsList;
 	static Calendar _date;
 	static ParseObject _rideObject;
+	static ArrayList<Group> _groupsList;
 
 
 
@@ -78,12 +82,11 @@ public class AddFragment extends Fragment{
 				false);
 		_fragView = layoutView;
 
-		startForm();
+		updateGui();
 		return layoutView;
 	}
 
-	protected void startForm() {
-		_date =  Calendar.getInstance();
+	public void updateGui() {
 		buttonsListener listener = new buttonsListener();
 		final View publishButton = _fragView.findViewById(R.id.publishButton);
 		publishButton.setOnClickListener(listener);
@@ -93,6 +96,8 @@ public class AddFragment extends Fragment{
 		timeButton.setTypeface(type);
 		final Button dateButton = (Button) _fragView.findViewById(R.id.dateButton);
 		dateButton.setOnClickListener(listener);
+		final Button groupsButton = (Button) _fragView.findViewById(R.id.groupsButton);
+		groupsButton.setOnClickListener(listener);
 		String currentDateString = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		dateButton.setText(currentDateString);
 		String currentTimeString = new SimpleDateFormat("HH:mm").format(new Date());
@@ -130,6 +135,7 @@ public class AddFragment extends Fragment{
 		{
 			return ;
 		}
+
 		_groupsList = new ArrayList<Group>();
 		List<String> activeGroups =  _currentUser.getList(UserFields.ACTIVEGROUPS);
 		Group group=null;
@@ -150,9 +156,10 @@ public class AddFragment extends Fragment{
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		_groupsAdapter = new AddFragGroupsAdapter(getActivity(), R.layout.group_view, _groupsList);
-		ListView listview = (ListView) _fragView.findViewById(R.id.GroupsListView);
-		listview.setAdapter(_groupsAdapter);
+
+		//		_groupsAdapter = new AddFragGroupsAdapter(getActivity(), R.layout.group_view, _groupsList);
+		//		ListView listview = (ListView) _fragView.findViewById(R.id.GroupsListView);
+		//		listview.setAdapter(_groupsAdapter);
 
 	}
 
@@ -181,7 +188,12 @@ public class AddFragment extends Fragment{
 				DialogFragment newFragment2 = new DatePickerFragment();
 				newFragment2.show(getActivity().getSupportFragmentManager(), "datePicker");
 				break;
+			case R.id.groupsButton:
+				DialogFragment newFragment3 = new GroupPickerFragment();
+				newFragment3.show(getActivity().getSupportFragmentManager(), "groupsPicker");
+				break;
 			}
+
 		}
 	}
 
@@ -193,9 +205,23 @@ public class AddFragment extends Fragment{
 	{
 		_rideObject.put(Ride.DATE,_date.getTime());
 		EditText fromHolder = (EditText) _fragView.findViewById(R.id.fromField);
-		_rideObject.put(Ride.FROM,fromHolder.getText().toString());
 		EditText toHolder = (EditText) _fragView.findViewById(R.id.toField);
-		_rideObject.put(Ride.TO,toHolder.getText().toString());
+		String from = fromHolder.getText().toString();
+		String to = toHolder.getText().toString();
+		if(TextUtils.isEmpty(from))
+		{
+			fromHolder.setError(_myActivity.getResources().getString(R.string.youMustChooseFrom));
+			fromHolder.requestFocus();
+			return ;
+		}
+		if(TextUtils.isEmpty(to))
+		{
+			toHolder.setError(_myActivity.getResources().getString(R.string.youMustChooseTo));
+			toHolder.requestFocus();
+			return ;
+		}
+		_rideObject.put(Ride.FROM,from);
+		_rideObject.put(Ride.TO,to);
 		EditText detailsHolder = (EditText) _fragView.findViewById(R.id.rideDetails);
 		_rideObject.put(Ride.COMMENTS,detailsHolder.getText().toString());
 		RadioButton Istart= (RadioButton)  _fragView.findViewById(R.id.radioIstart);
@@ -254,7 +280,7 @@ public class AddFragment extends Fragment{
 					text = "Ride added successfuly!";
 					Toast toast = Toast.makeText(context, text, duration);
 					toast.show();
-					startForm();
+					updateGui();
 					if(_myActivity!=null && _myActivity.myLiveFragment!=null)
 					{
 						_myActivity.myLiveFragment.updateGui();
@@ -313,6 +339,7 @@ public class AddFragment extends Fragment{
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			// Use the current date as the default date in the picker
+
 			int year = _date.get(Calendar.YEAR);
 			int month = _date.get(Calendar.MONTH);
 			int day = _date.get(Calendar.DAY_OF_MONTH);
@@ -326,6 +353,57 @@ public class AddFragment extends Fragment{
 			_date.set(year, month, day);
 			String currentDateString = new SimpleDateFormat("dd-MM-yyyy").format(_date.getTime());
 			dateButton.setText(currentDateString);
+		}
+	}
+
+	public static class GroupPickerFragment extends DialogFragment{
+		String [] namesCursor;
+		boolean [] checkedCursor;
+
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			createCursor();
+
+			// Set the dialog title
+			builder.setTitle(R.string.groupsToSend)
+			// Specify the list array, the items to be selected by default (null for none),
+			// and the listener through which to receive callbacks when items are selected
+			.setMultiChoiceItems(namesCursor, checkedCursor,
+					new DialogInterface.OnMultiChoiceClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which,
+						boolean isChecked) {
+					try {
+						_groupsList.get(which).setChecked(isChecked);
+						checkedCursor[which]=isChecked;
+					} catch (Exception e) {
+						System.out.println(e.toString());
+					}
+				}
+			})
+			// Set the action buttons
+			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int id) {
+					// User clicked OK, so save the mSelectedItems results somewhere
+					// or return them to the component that opened the dialog
+					//...
+				}
+			});
+
+			return builder.create();
+		}
+
+		public void createCursor()
+		{
+			namesCursor = new String[_groupsList.size()];
+			checkedCursor = new boolean[_groupsList.size()];
+
+			for (int i = 0; i < _groupsList.size(); ++i) {
+				Group group  = _groupsList.get(i);
+				namesCursor[i]=group.getName();
+				checkedCursor[i]=group.isChecked();
+			}
 		}
 	}
 }
