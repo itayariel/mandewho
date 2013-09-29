@@ -11,13 +11,16 @@ import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.RequestAsyncTask;
 import com.facebook.Response;
+import com.facebook.Session;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.Parse;
@@ -35,6 +38,7 @@ public class LoginActivity extends Activity {
 
 	private ArrayList<View> myScreens;
 	private ParseUser currentUser;
+	private TextView errorMsg;
 	private enum Screen {
 		PROGRESS,FACEBOOK
 	};
@@ -49,13 +53,14 @@ public class LoginActivity extends Activity {
 		currentUser = ParseUser.getCurrentUser();
 		myScreens = new ArrayList<View>();
 		View v = findViewById(R.id.login_status);
+		errorMsg = (TextView) findViewById(R.id.error_msg);
 		myScreens.add(v);
 		v = findViewById(R.id.facebookpage);
 		myScreens.add(v);
 		buttonsListener listener = new buttonsListener();
 		findViewById(R.id.login_button).setOnClickListener(listener);
 		/*
-		 * Kill user saved login
+		 * Kill user saved login*/
 		ParseUser.logOut();
 		Session session = Session.getActiveSession();
 		if(session !=null)
@@ -68,7 +73,7 @@ public class LoginActivity extends Activity {
 		 * Check if user is logged in 
 		 */
 		if (currentUser == null) {			// Set up the register form.
-			
+
 			currentUser = new ParseUser();
 			showScreen(Screen.FACEBOOK);
 		}else
@@ -103,18 +108,37 @@ public class LoginActivity extends Activity {
 	 * When user click sign in with facebook
 	 */
 	public void startFacebookLogin() {
-		ParseFacebookUtils.logIn(Arrays.asList("email", ParseFacebookUtils.Permissions.User.GROUPS),
+		ParseFacebookUtils.logIn(Arrays.asList(ParseFacebookUtils.Permissions.User.EMAIL, ParseFacebookUtils.Permissions.User.GROUPS),
 				this, new LogInCallback() {
 			@Override
 			public void done(ParseUser user, ParseException err) {
 				if(err==null)
 				{
 					currentUser=user;
-					
 					getFacebookIdInBackground();
+				}
+				else
+				{
+					loginError(err);
 				}
 			}
 		});
+	}
+
+	/*
+	 * When an Error occur during login
+	 */
+	protected void loginError(Exception err) {
+		showScreen(Screen.FACEBOOK);
+		ParseUser.logOut();
+		System.out.println(err.toString());
+		Session session = Session.getActiveSession();
+		if(session !=null)
+		{
+			session.closeAndClearTokenInformation();
+		}
+		currentUser = ParseUser.getCurrentUser();
+		errorMsg.setVisibility(View.VISIBLE);
 	}
 
 	/*
@@ -122,61 +146,59 @@ public class LoginActivity extends Activity {
 	 */
 	private void getFacebookIdInBackground() {
 		Request.Callback C = new Request.Callback() {
-
+			
 			//When we got user data
 			public void onCompleted(Response response) {
 				if (response != null) {
-			//TODO it fails here when the response is error but not null
+					//TODO it fails here when the response is error but not null
 					try {
 						saveFaceBookDataAndMoveToMain(response.getGraphObject().getInnerJSONObject());
 					} catch (Exception e) {
-						// TODO: handle exception
+						loginError(e);
 					}
-					
+
 				}
-				
+
 			}
 		};
 		Bundle params = new Bundle();
 		params.putString("fields", "id,name,groups,email,picture");
 		Request request = new Request(ParseFacebookUtils.getSession(),
 				"me", params, HttpMethod.GET, C);
-		
+
 		RequestAsyncTask task = new RequestAsyncTask(request);
-	    task.execute();
+		task.execute();
 	}
 
-	protected void saveFaceBookDataAndMoveToMain(JSONObject user) {
-		try {
-			currentUser.put(UserFields.FACEBOOKID, user.get("id"));
-			currentUser.put(UserFields.FULLNAME, user.get("name"));
-			currentUser.put(UserFields.EMAIL, user.get("email"));
-			JSONObject pictureObject = new JSONObject(user.get("picture").toString());
-			JSONObject pictureInnerObject = pictureObject.getJSONObject("data");
-			if(pictureInnerObject.isNull("url"))
-			{
-				currentUser.put(UserFields.PICTURE, null);
-			}
-			else
-			{
-				currentUser.put(UserFields.PICTURE, pictureInnerObject.get("url"));
-			}
-			JSONObject facebookGroups = new JSONObject(user.get("groups").toString());
-			currentUser.put(UserFields.GROUPS, facebookGroups.get("data"));
-
-			ActiveGroups list = new ActiveGroups(null,(JSONArray)facebookGroups.get("data"));
-			currentUser.addAllUnique(UserFields.ACTIVEGROUPS, list.getActiveGroupsList());
-		} catch (JSONException e1) {
-			e1.printStackTrace();
+	protected void saveFaceBookDataAndMoveToMain(JSONObject user) throws Exception {
+		if(user.isNull("email") || user.isNull("id") || user.isNull("name")
+				|| user.isNull("picture") || user.isNull("groups"))
+		{
+			throw new Exception("missing data from facebook");
 		}
-
+		currentUser.put(UserFields.FACEBOOKID, user.get("id"));
+		currentUser.put(UserFields.FULLNAME, user.get("name"));
+		currentUser.put(UserFields.EMAIL, user.get("email"));
+		JSONObject pictureObject = new JSONObject(user.get("picture").toString());
+		JSONObject pictureInnerObject = pictureObject.getJSONObject("data");
+		if(pictureInnerObject.isNull("url"))
+		{
+			currentUser.put(UserFields.PICTURE, null);
+		}
+		else
+		{
+			currentUser.put(UserFields.PICTURE, pictureInnerObject.get("url"));
+		}
+		JSONObject facebookGroups = new JSONObject(user.get("groups").toString());
+		currentUser.put(UserFields.GROUPS, facebookGroups.get("data"));
+		ActiveGroups list = new ActiveGroups(null,(JSONArray)facebookGroups.get("data"));
+		currentUser.addAllUnique(UserFields.ACTIVEGROUPS, list.getActiveGroupsList());
 		currentUser.saveInBackground(new SaveCallback() {
 			public void done(ParseException e) {
 				if (e == null) {
 					moveToMain();
 				} else {
-					System.out.println("error"+e);
-					
+					showScreen(Screen.FACEBOOK);
 				}
 			}
 		});
@@ -191,7 +213,7 @@ public class LoginActivity extends Activity {
 		finish();	
 	}
 
-	
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

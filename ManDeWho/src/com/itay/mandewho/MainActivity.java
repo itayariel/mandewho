@@ -67,7 +67,6 @@ public class MainActivity extends FragmentActivity {
 		currentUser.fetchInBackground(new GetCallback<ParseObject>() {
 			public void done(ParseObject object, ParseException e) {
 				if (e == null) {
-					System.out.println("fetch success");
 					getFacebookGroupsInBackground();
 				} else {
 				}
@@ -84,7 +83,6 @@ public class MainActivity extends FragmentActivity {
 			public void onCompleted(Response response) {
 				if (response != null) {
 					try {
-						System.out.println("fetch facebook success");
 						saveFaceBookData(response.getGraphObject().getInnerJSONObject());
 					} catch (Exception e) {
 						// TODO: handle exception
@@ -125,7 +123,6 @@ public class MainActivity extends FragmentActivity {
 			e1.printStackTrace();
 		}
 		updateAll();
-		System.out.println("updateing gui");
 		currentUser.saveInBackground();
 	}
 
@@ -286,7 +283,6 @@ public class MainActivity extends FragmentActivity {
 	 * Deletes all user data before login out
 	 */
 	public void logOut() {
-		System.out.println("you want to log out");
 		ParseUser.logOut();
 		Session session = Session.getActiveSession();
 		if(session !=null)

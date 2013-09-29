@@ -68,6 +68,20 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="35dp"
+            android:gravity="center_horizontal"
+            android:lines="2"
+            android:text="@string/facebook_error"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#D00000"
+            android:textSize="17sp" 
+            android:visibility="gone"/>
+        
+        <TextView
             android:id="@+id/profile_name"
             android:layout_width="174dp"
             android:layout_height="wrap_content"

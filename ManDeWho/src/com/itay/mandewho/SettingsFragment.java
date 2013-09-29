@@ -75,14 +75,11 @@ public class SettingsFragment extends ListFragment {
 		if(groupsList!=null && groupsList.length()!=0)
 		{
 			try {
-				System.out.println("building settings");
 				for (int i = 0; i < groupsList.length(); i++) {
 					Group group = new Group(groupsList.getJSONObject(i));
 					if(activeGroups.contains(group.getId()))
 					{
 						group.setChecked(true);
-						System.out.println("group number "+i);
-						System.out.println(group.getName());
 					}
 					else
 					{

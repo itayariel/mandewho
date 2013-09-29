@@ -109,12 +109,6 @@ public class LiveFragment extends ListFragment  {
 									_riders.add(ride);
 								}
 							}
-							else
-							{
-								System.out.println("throen here "+ride.getString(Ride.FROM));
-								System.out.println(now.get(Calendar.DAY_OF_MONTH));
-								System.out.println(rideTime.get(Calendar.DAY_OF_MONTH));
-							}
 							Collections.sort(_cars,new Comparator<ParseObject>(){
 								public int compare(ParseObject lhs,
 										ParseObject rhs) {
