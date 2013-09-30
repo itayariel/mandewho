@@ -40,6 +40,7 @@ public class MainActivity extends FragmentActivity {
 	public ParseUser currentUser;
 	public AddFragment myAddFragment=null;
 	public SettingsFragment mySettingsFragment=null;
+	public boolean activityCanceled =false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -303,5 +304,10 @@ public class MainActivity extends FragmentActivity {
 		{
 			mySettingsFragment.updateGui();
 		}
+	}
+	
+	public void onBackPressed() {
+	    super.onBackPressed();   
+	    activityCanceled =true;
 	}
 }

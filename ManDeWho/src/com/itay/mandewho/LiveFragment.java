@@ -123,7 +123,10 @@ public class LiveFragment extends ListFragment  {
 								}});
 						}
 					}
-					updateButtons();
+					if(_myActivity!=null && !_myActivity.activityCanceled)
+					{
+						updateButtons();
+					}
 				} else {
 					System.out.println("object fail");
 				}
