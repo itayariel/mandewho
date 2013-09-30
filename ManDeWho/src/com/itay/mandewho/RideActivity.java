@@ -192,10 +192,11 @@ public class RideActivity extends Activity {
 	}
 	public void mailClicked() {
 		
-		Intent mailIntent = new Intent(Intent.ACTION_SEND,Uri.parse("mailto:"+_ride.get(Ride.BYMAIL)));
+		Intent mailIntent = new Intent(Intent.ACTION_SEND,Uri.fromParts("mailto",_ride.getString(Ride.BYMAIL).toString(),null));
 		mailIntent.setType("plain/text");
 		mailIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.ride));
 		mailIntent.putExtra(Intent.EXTRA_TEXT, _request);
+		mailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {_ride.getString(Ride.BYMAIL).toString()});
 		startIntnet(mailIntent);
 		
 	}

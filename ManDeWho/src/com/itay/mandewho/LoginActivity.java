@@ -57,8 +57,10 @@ public class LoginActivity extends Activity {
 		myScreens.add(v);
 		v = findViewById(R.id.facebookpage);
 		myScreens.add(v);
+		v.requestFocus();
 		buttonsListener listener = new buttonsListener();
 		findViewById(R.id.login_button).setOnClickListener(listener);
+
 		/*
 		 * Check if user is logged in 
 		 */
